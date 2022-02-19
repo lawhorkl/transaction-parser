@@ -10,8 +10,13 @@
     "dev": "run-p dev:*"
   },
   "devDependencies": {
+    "@types/node": "^17.0.18",
     "nodemon": "^2.0.15",
     "npm-run-all": "^4.1.5",
     "typescript": "^4.5.5"
+  },
+  "dependencies": {
+    "@types/csvtojson": "^2.0.0",
+    "csvtojson": "^2.0.10"
   }
 }

@@ -10,6 +10,8 @@
     "skipLibCheck": true,                                /* Skip type checking all .d.ts files. */
     "rootDir": "./src",
     "outDir": "./dist",
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "types": ["node"],
+    "sourceMap": true
   }
 }
