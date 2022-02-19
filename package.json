@@ -1,0 +1,7 @@
+{
+  "name": "trans-parser",
+  "version": "1.0.0",
+  "main": "main.js",
+  "author": "Kyle Lawhorn <lawhorkl@mail.uc.edu>",
+  "license": "MIT"
+}
