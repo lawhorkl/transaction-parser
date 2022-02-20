@@ -4,24 +4,25 @@ export interface MissingTransactionReport {
 
 }
 
-const groupBy = <TKey, TValue>(
-    input: TValue[],
-    keySelector: (value: TValue) => TKey,
+type StringMap<TValue> = { [key: string]: TValue[] } 
 
-): Map<TKey, TValue[]> => {
-    const map = new Map<TKey, TValue[]>()
+const groupBy = <TValue>(
+    input: TValue[],
+    keySelector: (value: TValue) => string,
+
+): StringMap<TValue> => {
+    var map: StringMap<TValue> = {}
 
     for (const value of input) {
         const key = keySelector(value)
-
-        if (!map.has(key)) {
-            map.set(key, [])
+        if (!map[key]) {
+            map[key] = []
             continue
         }
 
-        const group = map.get(key)!
+        const test = map[key]
 
-        group.push(value)
+        map[key] = [ ...map[key], value]
     }
 
     return map
@@ -34,19 +35,21 @@ export class CompareService {
     ): MissingTransactionReport {
         const leftGroup = groupBy(
             leftData,
-            value => value.transDate
+            value => value.transDate.toISOString()
         )
         const rightGroup = groupBy(
             rightData,
-            value => value.transDate
+            value => value.transDate.toISOString()
         )
-        const leftDates = leftGroup.keys()
+        const leftDates = Object.keys(leftGroup)
 
-        for (const date of leftDates) {
-            const leftTransactions = leftGroup.get(date)!
-            const rightTransactions = rightGroup.get(date)
+        for (var dateString of leftDates) {
+            const date = new Date(dateString)
+            const leftTransactions = leftGroup[dateString]!
+            const rightTransactions = rightGroup[dateString]
 
             if (!rightTransactions) {
+                console.debug('right missing transaction on ' + date.toISOString())
                 continue
             }
 
@@ -54,12 +57,16 @@ export class CompareService {
             const numRight = rightTransactions.length
 
             if (numLeft > numRight) {
-                console.debug('transactions in left that are not in right')
+                console.debug('transactions in left that are not in right on day ' +  date.toISOString())
+            } else if (numLeft < numRight) {
+                console.debug('transactions in right that are not in left on day ' + date.toISOString())
             } else {
-                console.debug('transactions in right that are not in left')
+                console.debug('transactions are equal on day ' + date.toISOString())
             }
         }
 
         return {}
     }
 }
+
+export default new CompareService()
