@@ -1,4 +1,4 @@
 export interface FifthThirdTransaction {
-    transDate: Date,
+    transDate: string,
     purchaseAmount: number
 }

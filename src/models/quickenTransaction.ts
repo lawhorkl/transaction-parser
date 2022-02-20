@@ -1,4 +1,4 @@
 export interface QuickenTransaction {
-    transDate: Date,
+    transDate: string,
     purchaseAmount: number
 }

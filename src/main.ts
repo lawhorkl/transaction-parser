@@ -9,7 +9,8 @@ const main = async () => {
     const leftTransactions = await quickenService.fetchTransactions(leftPath)
     const rightTransactions = await fifthThirdService.fetchTransactions(rightPath)
 
-    compareService.findMissingTransactions(leftTransactions, rightTransactions)
+    const report = compareService.findMissingTransactions(leftTransactions, rightTransactions)
+    console.log("")
 }
 
 main()

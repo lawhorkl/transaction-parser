@@ -1,4 +1,4 @@
 export interface Transaction {
-    transDate: Date,
+    transDate: string,
     purchaseAmount: number
 }

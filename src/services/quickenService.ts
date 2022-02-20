@@ -9,7 +9,7 @@ export class QuickenService {
             path,
             row => {
                 return {
-                    transDate: new Date(row.field1),
+                    transDate: row.field1,
                     purchaseAmount: row.field2
                 }
             }
